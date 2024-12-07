@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class UserStorage {
-    public Map<Long, User> users;
+public class UserRepository {
+    private Map<Long, User> users;
     private Long id;
 
-    public UserStorage() {
+    public UserRepository() {
         id = 0L;
         users = new HashMap<>();
     }
@@ -47,10 +47,10 @@ public class UserStorage {
         if (!users.containsKey(user.getId())) {
             throw new UserAlreadyExistsException("Пользователь с ID=" + user.getId() + " не найден");
         }
-        if (user.getName() == null) {
+        if (user.getName() == null || user.getName().isBlank()) {
             user.setName(users.get(user.getId()).getName());
         }
-        if (user.getEmail() == null) {
+        if (user.getEmail() == null || user.getEmail().isBlank()) {
             user.setEmail(users.get(user.getId()).getEmail());
         }
         if (users.values().stream()

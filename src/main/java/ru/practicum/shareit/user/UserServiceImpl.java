@@ -10,8 +10,8 @@ import static java.util.stream.Collectors.toList;
 
 @Repository
 @RequiredArgsConstructor
-public class InMemoryUserService implements UserService {
-    private final UserStorage userStorage;
+public class UserServiceImpl implements UserService {
+    private final UserRepository userStorage;
     private final UserMapper userMapper;
 
     @Override

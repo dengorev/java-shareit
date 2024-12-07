@@ -13,11 +13,11 @@ import java.util.Map;
 import static java.util.stream.Collectors.toList;
 
 @Repository
-public class ItemStorage {
-    public Map<Long, Item> items;
+public class ItemRepository {
+    private Map<Long, Item> items;
     private Long id;
 
-    public ItemStorage() {
+    public ItemRepository() {
         id = 0L;
         items = new HashMap<>();
     }
@@ -43,10 +43,10 @@ public class ItemStorage {
             throw new ValidationException("Некорректный ввод id вещи");
         }
         if (items.containsKey(item.getId())) {
-            if (item.getName() == null) {
+            if (item.getName() == null || item.getName().isBlank()) {
                 item.setName(items.get(item.getId()).getName());
             }
-            if (item.getDescription() == null) {
+            if (item.getDescription() == null || item.getName().isBlank()) {
                 item.setDescription(items.get(item.getId()).getDescription());
             }
             if (item.getAvailable() == null) {
@@ -80,7 +80,8 @@ public class ItemStorage {
     }
 
     private boolean validation(Item item) {
-        if ((item.getName().isEmpty()) || (item.getDescription().isEmpty()) || (item.getAvailable() == null)) {
+        if ((item.getName().isEmpty()) || (item.getName().isBlank()) || (item.getDescription().isEmpty()) ||
+                item.getDescription().isBlank() || (item.getAvailable() == null)) {
             throw new ValidationException("Данные введены неверно");
         }
         return true;

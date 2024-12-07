@@ -13,8 +13,8 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
-public class InMemoryItemService implements ItemService {
-    private final ItemStorage itemStorage;
+public class ItemServiceImpl implements ItemService {
+    private final ItemRepository itemStorage;
     private final ItemMapper itemMapper;
     private final UserService userService;
 
@@ -63,7 +63,7 @@ public class InMemoryItemService implements ItemService {
                 .collect(toList());
     }
 
-    public boolean isExistUser(Long userId) {
+    private boolean isExistUser(Long userId) {
         boolean exist = false;
         if (userService.getUserById(userId) != null) {
             exist = true;

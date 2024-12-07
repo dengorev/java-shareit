@@ -14,25 +14,25 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleUserNotFoundException(final UserNotFoundException e) {
-        return new ErrorResponse(e.getMessage(), "4");
+    public ErrorResponse handleUserNotFoundException(UserNotFoundException e) {
+        return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleItemNotFoundException(final ItemNotFoundException e) {
-        return new ErrorResponse(e.getMessage(), "3");
+    public ErrorResponse handleItemNotFoundException(ItemNotFoundException e) {
+        return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleValidationException(final ValidationException e) {
-        return new ErrorResponse(e.getMessage(), "23");
+    public ErrorResponse handleValidationException(ValidationException e) {
+        return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleUserAlreadyExistException(final UserAlreadyExistsException e) {
-        return new ErrorResponse(e.getMessage(), "1");
+    public ErrorResponse handleUserAlreadyExistException(UserAlreadyExistsException e) {
+        return new ErrorResponse(e.getMessage());
     }
 }
