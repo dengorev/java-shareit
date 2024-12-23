@@ -41,7 +41,7 @@ public class ItemServiceImpl implements ItemService {
     public ItemDtoWithComments getItemById(Long id, Long userId) {
         Item item = itemRepository.getItemById(id);
         ItemDtoWithComments itemDto = itemMapper.mapToDtoWithComments(item);
-        if (userId == item.getOwnerId()) {
+        if (Objects.equals(userId, item.getOwnerId())) {
             List<Booking> bookings = bookingRepository.findAllByItemIdAndEndBeforeOrderByStartDesc(id,
                     LocalDateTime.now());
             if (!bookings.isEmpty()) {
@@ -116,7 +116,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private void checkOwner(Long ownerId, Long itemId) {
-        if (ownerId != itemRepository.getItemById(itemId).getOwnerId()) {
+        if (!Objects.equals(ownerId, itemRepository.getItemById(itemId).getOwnerId())) {
             throw new EntityNotFoundException("Вещь не принадлежит пользователю с id " + ownerId);
         }
     }

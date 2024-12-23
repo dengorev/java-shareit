@@ -7,6 +7,7 @@ import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
     private void checkEmail(UserDto user) {
         List<User> users = userRepository.findByEmailContainingIgnoreCase(user.getEmail());
         if (!users.isEmpty()) {
-            if (user.getEmail().equals(users.getFirst().getEmail()) && user.getId() != users.getFirst().getId()) {
+            if (user.getEmail().equals(users.getFirst().getEmail()) && !Objects.equals(user.getId(), users.getFirst().getId())) {
                 throw new ConflictDataException("Такой email уже используется");
             }
         }
