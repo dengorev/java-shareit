@@ -4,24 +4,28 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import ru.practicum.shareit.user.model.User;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "items")
+@Table(name = "comments")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "item_id")
+    private Long itemId;
+    @ManyToOne
+    @JoinColumn(name = "author")
+    private User author;
     @NotBlank
-    private String name;
-    @NotBlank
-    private String description;
+    private String text;
     @NotNull
-    private Boolean available;
-    @Column(name = "owner_id")
-    private Long ownerId;
+    private LocalDateTime created;
 }

@@ -7,21 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.UserDto;
 
-import java.util.List;
-
 @RestController
 @Slf4j
 @RequestMapping(path = "/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<UserDto> getUsers() {
-        log.info("Получение всех пользователей");
-        return userService.getUsers();
-    }
 
     @GetMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
@@ -48,8 +39,8 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDto delete(@PathVariable Long userId) {
+    public void delete(@PathVariable Long userId) {
         log.info("Удаление пользователя с ID={}", userId);
-        return userService.delete(userId);
+        userService.delete(userId);
     }
 }
