@@ -9,12 +9,12 @@ import java.util.List;
 @Data
 @Builder
 public class ItemDtoWithComments {
-    Long id;
-    String name;
-    String description;
-    Boolean available;
-    List<CommentDtoResponse> comments;
-    LocalDateTime lastBooking;
-    LocalDateTime nextBooking;
+    private Long id;
+    private String name;
+    private String description;
+    private Boolean available;
+    private List<CommentDtoResponse> comments;
+    private LocalDateTime lastBooking;
+    private LocalDateTime nextBooking;
 }
 

@@ -1,16 +1,15 @@
 package ru.practicum.shareit.item.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "comments")
 @Builder
@@ -25,7 +24,8 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "author")
     private User author;
-    @NotNull
+    @NotBlank
     private String text;
+    @NotNull
     private LocalDateTime created;
 }

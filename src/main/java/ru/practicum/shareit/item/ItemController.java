@@ -9,16 +9,16 @@ import ru.practicum.shareit.item.dto.*;
 
 import java.util.List;
 
+import static ru.practicum.shareit.booking.constants.Constants.OWNER;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/items")
 public class ItemController {
-    private static final String OWNER = "X-Sharer-User-Id";
     private final ItemService itemService;
 
     @PostMapping
-    @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public ItemDtoResponse create(@Valid @RequestBody ItemDtoRequest itemDto, @RequestHeader(OWNER) Long ownerId) {
         log.info("Создание вещи владельцем с ID={}", ownerId);
@@ -33,7 +33,6 @@ public class ItemController {
     }
 
     @PatchMapping("/{itemId}")
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public ItemDtoResponse update(@RequestBody ItemDtoRequest itemDto, @PathVariable Long itemId,
                                   @RequestHeader(OWNER) Long ownerId) {
@@ -56,8 +55,10 @@ public class ItemController {
     }
 
     @PostMapping("/{id}/comment")
+    @ResponseStatus(HttpStatus.CREATED)
     public CommentDtoResponse createComment(@RequestHeader(OWNER) Long userId,
                                             @PathVariable Long id, @Valid @RequestBody CommentDtoRequest comment) {
+        log.info("Создание комментария");
         return itemService.addComment(userId, id, comment);
     }
 

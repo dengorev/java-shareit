@@ -8,5 +8,5 @@ import org.hibernate.validator.constraints.Length;
 public class CommentDtoRequest {
     @NotBlank
     @Length(max = 512)
-    String text;
+    private String text;
 }

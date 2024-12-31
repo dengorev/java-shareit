@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class ItemDtoResponse {
-    Long id;
-    String name;
-    String description;
-    Boolean available;
-    LocalDateTime lastBooking;
-    LocalDateTime nextBooking;
+    private Long id;
+    private String name;
+    private String description;
+    private Boolean available;
+    private LocalDateTime lastBooking;
+    private LocalDateTime nextBooking;
 }

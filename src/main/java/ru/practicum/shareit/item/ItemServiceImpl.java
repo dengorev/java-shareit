@@ -2,6 +2,7 @@ package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.BookingRepository;
 import ru.practicum.shareit.exception.EntityNotFoundException;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
@@ -29,6 +31,7 @@ public class ItemServiceImpl implements ItemService {
     private final CommentMapper commentMapper;
 
     @Override
+    @Transactional
     public ItemDtoResponse create(ItemDtoRequest itemDto, Long ownerId) {
         userRepository.getUserById(ownerId);
         Item item = itemMapper.modelFromDto(itemDto);
@@ -61,6 +64,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public ItemDtoResponse update(ItemDtoRequest itemDto, Long ownerId, Long itemId) {
         Item oldItem = itemRepository.getItemById(itemId);
         checkOwner(ownerId, itemId);
@@ -70,7 +74,7 @@ public class ItemServiceImpl implements ItemService {
                 -> !description.isBlank()).orElse(oldItem.getDescription()));
         oldItem.setAvailable(Optional.ofNullable(itemDto.getAvailable()).filter(available
                 -> available.describeConstable().isPresent()).orElse(oldItem.getAvailable()));
-        return itemMapper.modelToDtoResponse(itemRepository.save(oldItem));
+        return itemMapper.modelToDtoResponse(oldItem);
     }
 
     @Override
@@ -101,6 +105,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public CommentDtoResponse addComment(Long userId, Long itemId, CommentDtoRequest comment) {
         User user = userRepository.getUserById(userId);
         itemRepository.getItemById(itemId);
